@@ -24,3 +24,4 @@ stage('Push image') {
      app.push("latest")
   }
 }
+
