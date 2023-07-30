@@ -7,22 +7,9 @@ node {
          
      }
      stage('Push image') {
-         docker.withRegistry('https://18.209.59.9', 'docker_hub') {
+         docker.withRegistry('https://54.197.19.111', 'harbor_cred') {
              app.push("${env.BUILD_NUMBER}")
              app.push("latest")
          }
      }
 }
-
-stage('Build image') {
-  app = docker.build("gasbugs/flask-example")
-}
-
-stage('Push image') {
-  docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') 
-  {
-     app.push("${env.BUILD_NUMBER}")
-     app.push("latest")
-  }
-}
-
