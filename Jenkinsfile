@@ -7,7 +7,7 @@ node {
          
      }
      stage('Push image') {
-         docker.withRegistry('https://18.209.59.9', 'docker-hub') {
+         docker.withRegistry('https://18.209.59.9', 'docker_hub') {
              app.push("${env.BUILD_NUMBER}")
              app.push("latest")
          }
