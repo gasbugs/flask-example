@@ -12,10 +12,4 @@ node {
              app.push("latest")
          }
      }
-     stage('Anchore analyse') {  
-           catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-           writeFile file: 'anchore_images', text: '127.0.0.1/admin/flask-example'  
-           anchore name: 'anchore_images'  
-            }
-        }
 }
