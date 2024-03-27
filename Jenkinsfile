@@ -13,11 +13,9 @@ node {
          }
      }
      stage('Anchore analyse') {  
-            steps {  
-                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-                writeFile file: 'anchore_images', text: 'text_string'  
-                anchore name: 'anchore_images'  
-                }
+           catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+           writeFile file: 'anchore_images', text: 'text_string'  
+           anchore name: 'anchore_images'  
             }
         }
 }
