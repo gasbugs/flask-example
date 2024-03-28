@@ -14,7 +14,7 @@ node {
      }
      stage('Scan') {
            // download report template
-           sh 'wget https://gist.githubusercontent.com/vjayajv/2fc83aaa80656f976bb39b447cad362d/raw/74a09bf76f8017001312daf65cb83f1b4f4e10d1/report.tmpl'
+           sh 'curl -sfL https://gist.githubusercontent.com/vjayajv/2fc83aaa80656f976bb39b447cad362d/raw/74a09bf76f8017001312daf65cb83f1b4f4e10d1/report.tmpl > report.tmpl'
            
            // Scan all vuln levels
            sh 'mkdir -p reports'
