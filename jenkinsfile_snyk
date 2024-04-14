@@ -1,0 +1,25 @@
+node {
+     stage('Clone repository') {
+         checkout scm
+     }
+     stage('Build image') {
+         app = docker.build("admin/flask-example")
+         
+     }
+     stage('Push image') {
+         docker.withRegistry('https://127.0.0.1/', 'harbor-reg') {
+             app.push("${env.BUILD_NUMBER}")
+             app.push("latest")
+         }
+     }
+    stage('Test') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation: 'snyk@latest', //<Your Snyk Installation Name>
+          snykTokenId: 'snyk-api-token', //<Your Snyk API Token ID>
+          // place other parameters here
+        )
+      }
+    }
+}
