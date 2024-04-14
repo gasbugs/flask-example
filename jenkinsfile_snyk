@@ -18,6 +18,7 @@ node {
           snykInstallation: 'snyk@latest', //<Your Snyk Installation Name>
           snykTokenId: 'snyk-api-token', //<Your Snyk API Token ID>
           monitorProjectOnBuild: false,
+          failOnIssues: false,
           // place other parameters here
           additionalArguments: 'https://github.com/gasbugs/flask-example'
         )
