@@ -13,13 +13,11 @@ node {
          }
      }
     stage('Test') {
-      steps {
         echo 'Testing...'
         snykSecurity(
           snykInstallation: 'snyk@latest', //<Your Snyk Installation Name>
           snykTokenId: 'snyk-api-token', //<Your Snyk API Token ID>
           // place other parameters here
         )
-      }
     }
 }
