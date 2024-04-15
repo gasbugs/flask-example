@@ -17,7 +17,7 @@ node {
                     // SonarQube 스캐너 실행
                     withSonarQubeEnv('SonarQubeScanner') {
                         sh """
-                           sonar-scanner \
+                           mvn sonar:sonar \
                              -Dsonar.projectKey=demo-project \
                              -Dsonar.sources=. \
                              -Dsonar.host.url=http://10.0.2.15:9000 \
