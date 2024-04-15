@@ -15,7 +15,7 @@ node {
      stage('SonarQube Scan') {
                 script {
                     // SonarQube 스캐너 실행
-                    withSonarQubeEnv('YourSonarQubeEnvironment') {
+                    withSonarQubeEnv('SonarQube-Scanner') {
                         sh """
                            sonar-scanner \
                              -Dsonar.projectKey=demo-project \
