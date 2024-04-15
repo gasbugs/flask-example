@@ -1,0 +1,29 @@
+node {
+     stage('Clone repository') {
+         checkout scm
+     }
+     stage('Build image') {
+         app = docker.build("admin/flask-example")
+         
+     }
+     stage('Push image') {
+         docker.withRegistry('https://127.0.0.1/', 'harbor-reg') {
+             app.push("${env.BUILD_NUMBER}")
+             app.push("latest")
+         }
+     }
+     stage('SonarQube Scan') {
+                script {
+                    // SonarQube 스캐너 실행
+                    withSonarQubeEnv('YourSonarQubeEnvironment') {
+                        sh """
+                           sonar-scanner \
+                             -Dsonar.projectKey=demo-project \
+                             -Dsonar.sources=. \
+                             -Dsonar.host.url=http://10.0.2.15:9000 \
+                             -Dsonar.login=squ_fe006e32992c0c17796cd544dae8adb8232b56fc
+                        """
+                    }
+               }
+        }
+}
