@@ -15,7 +15,12 @@ node {
      stage('SonarQubeScanner') {
          def scannerHome = tool 'SonarQubeScanner';
          withSonarQubeEnv('SonarQubeScanner') {
-             sh "${scannerHome}/bin/sonar-scanner"
+             sh """${scannerHome}/bin/sonar-scanner \
+                             -Dsonar.projectKey=demo-project \
+                             -Dsonar.sources=. \
+                             -Dsonar.host.url=http://10.0.2.15:9000 \
+                             -Dsonar.login=squ_fe006e32992c0c17796cd544dae8adb8232b56fc
+             """
         }
      }
 }
