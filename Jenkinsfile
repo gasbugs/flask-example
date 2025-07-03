@@ -12,7 +12,7 @@ node {
             sh '''
                 ls -al
                 pip install -r requirements.txt
-                sh 'pytest tests/'
+                pytest tests/
                '''
         }
      }
