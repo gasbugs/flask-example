@@ -1,5 +1,5 @@
 # tests/test_app.py
-from source.template.app import app
+from source.app import app
 import pytest
 
 @pytest.fixture
