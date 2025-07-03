@@ -10,6 +10,7 @@ node {
         // 컨테이너 내부에서 테스트 실행 (예시: pytest)
         app.inside {
             sh '''
+                ls -al
                 pip install -r requirements.txt
                 sh 'pytest tests/'
                '''
