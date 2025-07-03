@@ -11,7 +11,6 @@ node {
         app.inside {
             sh '''
                 pip install -r requirements.txt
-                export PYTHONPATH=$PYTHONPATH:$(pwd)/source
                 sh 'pytest tests/'
                '''
         }
