@@ -17,7 +17,7 @@ node {
                 pwd
                 pip install -r requirements.txt
                 # HTML 리포트 생성
-                pytest tests/ --html=report.html --self-contained-html --junitxml=output/report.xml
+                pytest tests/ --html=report.html --self-contained-html --junitxml=report.xml
             '''
         }
     }
