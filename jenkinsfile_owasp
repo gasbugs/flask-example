@@ -29,6 +29,10 @@ node {
           -t http://localhost:5000 \
           -r zap_report.html
         '''
+        exit_code=$?
+        if [ $exit_code -eq 1 ]; then
+          exit 1
+        fi
         // 앱 컨테이너 정리
         sh 'docker stop flask-example-test || true'
         sh 'docker rm flask-example-test || true'
