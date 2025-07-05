@@ -24,7 +24,7 @@ node {
         sh '''
         docker run --rm -t --user root \
           --network host \
-          -v $WORKSPACE:/zap/wrk/:rw \
+          -v /home/jenkins/workspace/flask-example-docker-pipeline:/zap/wrk/:rw \
           zaproxy/zap-weekly \
           zap-baseline.py \
           -t http://localhost:5000 \
