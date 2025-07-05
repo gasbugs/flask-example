@@ -20,6 +20,7 @@ node {
         '''
         // ZAP Docker로 DAST 점검 실행
         sh '''
+        docker rm -f flask-example-test || true
         docker run --rm -t \
           --network host \
           -v $WORKSPACE:/zap/wrk/:rw \
