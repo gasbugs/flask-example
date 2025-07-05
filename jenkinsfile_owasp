@@ -23,7 +23,7 @@ node {
         docker run --rm -t \
           --network host \
           -v $WORKSPACE:/zap/wrk/:rw \
-          owasp/zap2docker-weekly \
+          zaproxy/zap-weekly \
           zap-baseline.py \
           -t http://localhost:5000 \
           -r zap_report.html
