@@ -15,12 +15,12 @@ node {
         // steps 블록 없이 바로 명령어 사용
         // 앱 컨테이너 실행
         sh '''
+        docker rm -f flask-example-test || true
         docker run -d --name flask-example-test -p 5000:5000 admin/flask-example:latest
         sleep 10
         '''
         // ZAP Docker로 DAST 점검 실행
         sh '''
-        docker rm -f flask-example-test || true
         docker run --rm -t \
           --network host \
           -v $WORKSPACE:/zap/wrk/:rw \
