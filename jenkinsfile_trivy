@@ -15,19 +15,19 @@ node {
            // Scan all vuln levels
            sh 'mkdir -p reports'
            sh 'ls -R .'
-           sh 'trivy filesystem --ignore-unfixed --vuln-type os,library --format template --template "@html.tpl" -o reports/nodjs-scan.html ./'
+           sh 'trivy filesystem --ignore-unfixed --pkg-types os,library --scanners vuln,secret,misconfig --format template --template "@html.tpl" -o reports/trivy-scan-result.html ./'
            publishHTML target : [
                allowMissing: true,
                alwaysLinkToLastBuild: true,
                keepAll: true,
                reportDir: 'reports',
-               reportFiles: 'nodjs-scan.html',
+               reportFiles: 'trivy-scan-result.html',
                reportName: 'Trivy Scan',
                reportTitles: 'Trivy Scan'
            ]
 
            // Scan again and fail on CRITICAL vulns
-           sh 'trivy filesystem --ignore-unfixed --vuln-type os,library --exit-code 1 --severity CRITICAL ./'
+           sh 'trivy filesystem --ignore-unfixed --pkg-types os,library --scanners vuln,secret,misconfig --exit-code 1 --severity CRITICAL ./'
      }
 
      stage('Push image') {
