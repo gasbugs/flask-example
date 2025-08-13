@@ -6,12 +6,6 @@ node {
          app = docker.build("admin/flask-example")
          
      }
-     stage('Push image') {
-         docker.withRegistry('https://yourdomain.com/', 'harbor_cred') {
-             app.push("${env.BUILD_NUMBER}")
-             app.push("latest")
-         }
-     }
      stage('SonarQubeScanner') {
          def scannerHome = tool 'SonarQubeScanner';
          withSonarQubeEnv('SonarQubeScanner') {
@@ -23,4 +17,11 @@ node {
              """
         }
      }
+     stage('Push image') {
+         docker.withRegistry('https://yourdomain.com/', 'harbor_cred') {
+             app.push("${env.BUILD_NUMBER}")
+             app.push("latest")
+         }
+     }
+
 }
