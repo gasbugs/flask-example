@@ -19,7 +19,7 @@ node {
      }
     // Quality Gate 결과에 따른 파이프라인 중단
     stage('Quality Gate') {
-        timeout(time: 1, unit: 'MINUTES') {
+        timeout(time: 3, unit: 'MINUTES') {
             def qg = waitForQualityGate()
             if (qg.status != 'OK') {
                 error "파이프라인이 Quality Gate 실패로 인해 중단됩니다: ${qg.status}"
