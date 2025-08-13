@@ -6,15 +6,10 @@ node {
          app = docker.build("admin/flask-example")
          
      }
-     stage('Push image') {
-         docker.withRegistry('https://127.0.0.1/', 'harbor_cred') {
-             app.push("${env.BUILD_NUMBER}")
-             app.push("latest")
-         }
-     }
+
      stage('Scan') {
            // Install trivy
-           sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.50.1'
+           sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.65.0'
            sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl'
 
            // Scan all vuln levels
@@ -33,5 +28,12 @@ node {
 
            // Scan again and fail on CRITICAL vulns
            sh 'trivy filesystem --ignore-unfixed --vuln-type os,library --exit-code 1 --severity CRITICAL ./'
-       }
+     }
+
+     stage('Push image') {
+         docker.withRegistry('https://127.0.0.1/', 'harbor_cred') {
+             app.push("${env.BUILD_NUMBER}")
+             app.push("latest")
+         }
+     }
 }
