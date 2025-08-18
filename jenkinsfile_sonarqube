@@ -1,34 +1,29 @@
 node {
-     stage('Clone repository') {
-         checkout scm
-     }
-     stage('Build image') {
-         app = docker.build("admin/flask-example")
-         
-     }
-     stage('SonarQubeScanner') {
-         def scannerHome = tool 'SonarQubeScanner';
-         withSonarQubeEnv('SonarQubeScanner') {
-             sh """${scannerHome}/bin/sonar-scanner \
-                             -Dsonar.projectKey=demo-project \
-                             -Dsonar.sources=.
-             """
+    stage('Clone repository') {
+        checkout scm
+    }
+    stage('Build image') {
+        app = docker.build("admin/flask-example")
+    }
+    stage('SonarQubeScanner') {
+        def scannerHome = tool 'SonarQubeScanner'
+        withSonarQubeEnv('SonarQubeScanner') {
+            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=demo-project -Dsonar.sources=."
         }
-     }
+    }
     // Quality Gate 결과에 따른 파이프라인 중단
     stage('Quality Gate') {
-        timeout(time: 3, unit: 'MINUTES') {
+        timeout(time: 5, unit: 'MINUTES') { // 시간 상황에 따라 조정
             def qg = waitForQualityGate()
             if (qg.status != 'OK') {
                 error "파이프라인이 Quality Gate 실패로 인해 중단됩니다: ${qg.status}"
             }
         }
     }
-     stage('Push image') {
-         docker.withRegistry('https://yourdomain.com/', 'harbor_cred') {
-             app.push("${env.BUILD_NUMBER}")
-             app.push("latest")
-         }
-     }
-
+    stage('Push image') {
+        docker.withRegistry('https://yourdomain.com/', 'harbor_cred') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
+    }
 }
