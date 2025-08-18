@@ -16,7 +16,7 @@ node {
            sh 'mkdir -p reports'
            sh 'ls -R .'
            sh 'trivy filesystem --ignore-unfixed --pkg-types os,library --scanners vuln,secret,misconfig --format template --template "@html.tpl" -o reports/trivy-scan-fs-result.html ./'
-           sh 'trivy i admin/flask-example --format template --template "@html.tpl" -o reports/trivy-scan-image-result.html ./'
+           sh 'trivy i --format template --template "@html.tpl" -o reports/trivy-scan-image-result.html admin/flask-example'
 
            publishHTML target : [
                allowMissing: true,
