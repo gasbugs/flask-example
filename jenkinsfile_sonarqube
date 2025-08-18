@@ -11,9 +11,7 @@ node {
          withSonarQubeEnv('SonarQubeScanner') {
              sh """${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=demo-project \
-                             -Dsonar.sources=. \
-                             -Dsonar.host.url=http://10.0.2.15:9000 \
-                             -Dsonar.login=squ_fe2b3229e6d1ada5432ec140ae7affacbf7ec6ff
+                             -Dsonar.sources=.
              """
         }
      }
