@@ -15,15 +15,27 @@ node {
            // Scan all vuln levels
            sh 'mkdir -p reports'
            sh 'ls -R .'
-           sh 'trivy filesystem --ignore-unfixed --pkg-types os,library --scanners vuln,secret,misconfig --format template --template "@html.tpl" -o reports/trivy-scan-result.html ./'
+           sh 'trivy filesystem --ignore-unfixed --pkg-types os,library --scanners vuln,secret,misconfig --format template --template "@html.tpl" -o reports/trivy-scan-fs-result.html ./'
+           sh 'trivy i admin/flask-example --format template --template "@html.tpl" -o reports/trivy-scan-image-result.html ./'
+
            publishHTML target : [
                allowMissing: true,
                alwaysLinkToLastBuild: true,
                keepAll: true,
                reportDir: 'reports',
-               reportFiles: 'trivy-scan-result.html',
-               reportName: 'Trivy Scan',
-               reportTitles: 'Trivy Scan'
+               reportFiles: 'trivy-scan-image-result.html',
+               reportName: 'Trivy Image Scan',
+               reportTitles: 'Trivy Image Scan'
+           ]
+
+           publishHTML target : [
+               allowMissing: true,
+               alwaysLinkToLastBuild: true,
+               keepAll: true,
+               reportDir: 'reports',
+               reportFiles: 'trivy-scan-fs-result.html',
+               reportName: 'Trivy FS Scan',
+               reportTitles: 'Trivy FS Scan'
            ]
 
            // Scan again and fail on CRITICAL vulns
