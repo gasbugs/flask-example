@@ -5,12 +5,7 @@ node {
     stage('Build image') {
         app = docker.build("admin/flask-example")
     }
-    stage('Push image') {
-        docker.withRegistry('https://127.0.0.1/', 'harbor_cred') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-        }
-    }
+
     stage('DAST with OWASP ZAP (Docker)') {
         // steps 블록 없이 바로 명령어 사용
         // 앱 컨테이너 실행
@@ -42,5 +37,12 @@ node {
             reportFiles: 'zap_report.html',
             reportName: 'OWASP ZAP DAST Report'
         )
+    }
+
+    stage('Push image') {
+        docker.withRegistry('https://127.0.0.1/', 'harbor_cred') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
     }
 }
